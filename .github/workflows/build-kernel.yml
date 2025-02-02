@@ -21,15 +21,16 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y bc bison build-essential ccache curl flex git \
-        libncurses5-dev libssl-dev libelf-dev python3 python3-pip zip unzip
+        libncurses5-dev libssl-dev libelf-dev python2 python2-minimal zip unzip
+        ln -s /usr/bin/python2 /usr/bin/python  # Fix python2 missing issue
 
     # Step 3: Setup Compiler (Clang)
     - name: Download Clang
       run: |
-        mkdir -p clang
-        wget -O clang.tar.gz https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master.tar.gz
-        tar -xvf clang.tar.gz -C clang
-
+        mkdir -p toolchain
+        wget -O toolchain/clang.tar.gz https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master.tar.gz
+        tar -xvf toolchain/clang.tar.gz -C toolchain
+        
     # Step 4: Build Kernel
     - name: Compile Kernel
       run: |
